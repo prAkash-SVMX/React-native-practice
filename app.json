@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "movieCheck",
+    "slug": "movieCheck",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "movieCheck"
+}
