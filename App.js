@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,FlatList, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View,FlatList, TouchableOpacity, Button} from 'react-native';
 import { moviesList } from './Network/Network';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { userScreeen } from './user';
-
+import { Autocomplete } from './autocomplete';
 const Home=({navigation})=>{
   const renerItem=({item,index})=>{
     return(
@@ -34,6 +34,7 @@ const Home=({navigation})=>{
   return(
     
    <View style={styles.container}>
+    <Button title='text' onPress={()=>navigation.navigate('AutoComplete')}></Button>
     <FlatList
     data={user}
     renderItem={renerItem}
@@ -52,6 +53,7 @@ export default function App() {
     <Stack.Navigator>
       <Stack.Screen name='home' component={Home} ></Stack.Screen>
       <Stack.Screen name='user' component={userScreeen}></Stack.Screen>
+      <Stack.Screen name='AutoComplete' component={Autocomplete}></Stack.Screen>
     </Stack.Navigator>
    </NavigationContainer>
   
