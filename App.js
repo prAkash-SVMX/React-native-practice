@@ -1,13 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View,FlatList, TouchableOpacity} from 'react-native';
+import { moviesList } from './Network/Network';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { userScreeen } from './user';
 
+const Home=({navigation})=>{
+  const renerItem=({item,index})=>{
+    return(
+    <TouchableOpacity onPress={()=>{ 
+     navigation.navigate('user',{data:item})
+      // const updatedData=[...user];
+      // updatedData.splice(index,1);
+      // console.log("s",updatedData);
+      // setUser(updatedData)
+    }}
+      >
+      <Text style={styles.listItem}>
+      { 
+      item.name
+      }
+       </Text>
+    </TouchableOpacity>
+    );
+  }
+   const [user,setUser]=useState();
+  useEffect(()=>{
+    
+    moviesList().then(res=>res.json()).then(res=>setUser(res));
+    
+  },[]);
+  return(
+    
+   <View style={styles.container}>
+    <FlatList
+    data={user}
+    renderItem={renerItem}
+    ></FlatList>
+   
+  </View>
+  
+  );
+}
 export default function App() {
+ const Stack=createNativeStackNavigator();
+ 
+ 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+   <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name='home' component={Home} ></Stack.Screen>
+      <Stack.Screen name='user' component={userScreeen}></Stack.Screen>
+    </Stack.Navigator>
+   </NavigationContainer>
+  
   );
 }
 
@@ -17,5 +64,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  listItem:{
+    borderRadius:10,
+    borderWidth:3,
+    borderColor:'black',
   },
 });
